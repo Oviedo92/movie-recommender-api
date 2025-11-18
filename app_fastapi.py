@@ -4,6 +4,8 @@ import pickle
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Dict
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # --- CONFIGURACIÓN CLAVE ---
 # Asegúrate de que estos nombres coincidan con tus archivos
@@ -13,6 +15,15 @@ METADATOS_PATH = "combineds_ratings.csv" # cambiado estabaa dataset combineted_r
 
 # Inicializar FastAPI
 app = FastAPI(title="API de Recomendación de Películas para Flutter")
+
+# Agregar middleware CORS justo después de crear app
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Aquí defines qué orígenes permites. "*" para permitir todos
+    allow_credentials=True,
+    allow_methods=["*"],  # Métodos HTTP permitidos
+    allow_headers=["*"],  # Headers permitidos
+)
 
 # Variables globales para el modelo, metadatos y la lista de películas vistas
 model = None
